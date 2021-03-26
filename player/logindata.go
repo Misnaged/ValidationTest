@@ -91,7 +91,7 @@ func (login LoginStruct) BuildLogin(loginname, password string){
 	Authie = make(map[string]string)
 	if _, err := fmt.Scan(&loginname, &password);
 	err != nil {
-		log.Print("  Scan for i, j & k failed, due to ", err)
+		log.Print(" Failed due to ", err)
 		return
 	}
 	Authie[loginname] = password
