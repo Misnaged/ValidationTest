@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"userTA/player"
 	"userTA/responses"
+
 )
 
 //***** Building a transaction request if conditions are passed ****//
@@ -32,11 +33,15 @@ func RequestTA(){
 }
 
 //**** checking if Login/Password are passed succesfully ****////
-func CallTransAct(){
+func CallTransAct() (err error){
+if err != nil{
+	return fmt.Errorf("transaction calling has been failed: %w", err)
+}
 	if player.AccessFlag == 1{
 		responses.ResponseToTA()
 	}else{
 		return
 	}
+	return nil
 }
 
