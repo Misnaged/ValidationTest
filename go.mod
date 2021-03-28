@@ -1,3 +1,3 @@
-module UserTA
+module userTA
 
 go 1.16
