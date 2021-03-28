@@ -2,7 +2,6 @@ package responses
 
 import (
 	"fmt"
-	"log"
 )
 
 //****Defining UserInputs
@@ -14,26 +13,34 @@ var ValidTransActions = []int {10000, 20000, 30000}
 //*********** Flags used for managing the code ****//
 var ValidationFlag int
 
-func ResponseToTA() (int, int){
-
+func ResponseToTA() (int, int, error){
 	if _, err := fmt.Scan(&UserInput);
 		err != nil {
-		log.Print(" Transaction has been failed due to ", err)
-	}
+		return 0, 0, fmt.Errorf(" Transaction has been failed due to: %w", err)
+      	}
 
-	for _,ValidTA := range ValidTransActions{
-		if UserInput == ValidTA{
-			fmt.Println("Validation succeeded!")
-		}else{
-			log.Println("Validation rejected!")
-		}
-		if ValidTA == UserInput{
-			ValidationFlag = 1
-			break
-		}else{
-			ValidationFlag = 0
-		}
-	}
+		for _, ValidTA := range ValidTransActions {
+			areEqual, err := Matching(UserInput, ValidTA)
 
-	return UserInput, ValidationFlag
+			if areEqual {fmt.Println("TransAction has been done successfully")}
+
+			if err != nil{
+				return 0, 0, fmt.Errorf(" Transaction is unvalid: %w", err)
+			}
+
+			if ValidTA == UserInput {
+				ValidationFlag = 1
+				break
+			} else {
+				ValidationFlag = 0
+			}
+		}
+	return UserInput, ValidationFlag, nil
+}
+
+func Matching(a1, b1  int)  (areEq bool, err error){
+	if a1 == b1{
+		return true, nil
+	}
+	return true, nil
 }
