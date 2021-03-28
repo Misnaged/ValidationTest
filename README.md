@@ -1,6 +1,6 @@
 # ValidationTest
 
-##First
+## First
 
 After running the programm it will request to fill 2 strings in the console
 
@@ -8,7 +8,7 @@ First is the login ---  serega
 Second - passphrase ---- aye228
 
 
-### Second
+## Second
 
 If you successfuly passed login/pass 
 
@@ -19,7 +19,7 @@ There are only 3 valid transaction ints: 10000, 20000, 30000
 You have only 3 tries to do so
 
 
-###End
+## End
 
 There are 2 cases for the programm to be automatically closed:
 
