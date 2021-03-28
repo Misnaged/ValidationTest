@@ -2,7 +2,7 @@
 
 ##First
 
-After running the programm it will request you to fill 2 strings in the console
+After running the programm it will request to fill 2 strings in the console
 
 First is the login ---  serega
 Second - passphrase ---- aye228
