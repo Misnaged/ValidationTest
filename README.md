@@ -3,10 +3,10 @@
 ## First
 
 After running the programm it will request to fill 2 strings in the console
-
-First is the login ---  serega
-Second - passphrase ---- aye228
-
+```
+1. login ***serega***
+2. passphrase ***aye228***
+```
 
 ## Second
 
