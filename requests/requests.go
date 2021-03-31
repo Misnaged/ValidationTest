@@ -1,47 +1,45 @@
 package requests
 
 import (
+	"errors"
 	"fmt"
 	"userTA/player"
 	"userTA/responses"
-
 )
 
 //***** Building a transaction request if conditions are passed ****//
-func RequestTA(){
+func RequestTA() error{
 	TransactionAttempts := []int{1, 2, 3}
-	for _, att := range TransactionAttempts{
-		switch att {
-		case 1:
-			CallTransAct()
-			fmt.Println("validation flag is", responses.ValidationFlag)
-		case 2:
-			CallTransAct()
-			fmt.Println("validation flag is", responses.ValidationFlag)
 
-		case 3:
-			CallTransAct()
-			fmt.Println("validation flag is", responses.ValidationFlag)
+		for _, att := range TransactionAttempts {
+			if player.AccessFlag == 1 {
+					switch att {
+					case 1:
+						responses.ResponseToTA()
+
+					case 2:
+						responses.ResponseToTA()
+
+					case 3:
+						responses.ResponseToTA()
+
+					}
+				if responses.ValidationFlag == 1{
+					break
+				}
+			} else if err, ok := IsAccessFlagValid(player.AccessFlag);
+				err != nil && !ok {
+				return fmt.Errorf("access flag check returned an error: %w", err)
+			}
 		}
-		if responses.ValidationFlag == 1{
-			break
-		}else{
-			continue
-		}
+return nil
+}
+//***additional checking for login/pass///
+func IsAccessFlagValid(receivedFlag int) (error, bool){
+	if receivedFlag != 1 {
+		return errors.New("AccessFlag isn't valid"), false
 	}
-
+	return nil, true
 }
 
-//**** checking if Login/Password are passed succesfully ****////
-func CallTransAct() (err error){
-if err != nil{
-	return fmt.Errorf("transaction calling has been failed: %w", err)
-}
-	if player.AccessFlag == 1{
-		responses.ResponseToTA()
-	}else{
-		return
-	}
-	return nil
-}
 
