@@ -1,13 +1,16 @@
 package player
 
 import (
+	"errors"
 	"fmt"
+	"strings"
 )
 
 
 // interface used for abstract defining
 type LogPass interface {
 	BuildLogin(login, password string) error
+	LogPassEq(key, value string) (error, bool)
 }
 
 //*********Login data building structure****///
@@ -20,6 +23,7 @@ var (
 	AuLogin = "serega"
 	AuPassphrase = "aye228"
 )
+
 
 var AccessFlag int
 
@@ -38,28 +42,40 @@ func (login LoginStruct) BuildLogin(loginname, password string) error{
 	return nil
 }
 
+func (login LoginStruct) LogPassEq(key, value string) (error, bool){
+	if strings.EqualFold(AuLogin, key) && strings.EqualFold(AuPassphrase, value) {
+		return nil, true
+	} else{
+		return errors.New("error in Login/Passphrase"), false
+	}
+	}
 //-----------------------------------------------------------------------------------------//
 
 //************FUNCTIONS FOR EXTERNAL CALLING*********//
 
-func CheckLogin() int{
+
+
+func SetLogin(loginIF LogPass) error{
+
+	if err := loginIF.BuildLogin("",""); err != nil{
+		return fmt.Errorf("error: %w", err)
+	}
+	return nil
+}
+
+
+func CheckLogin(loginIF LogPass) (int, error){
 	for key, value := range Authie {
-		if (AuLogin == key && AuPassphrase == value) {
+		err, ok := loginIF.LogPassEq(key, value)
+		if ok {
 			fmt.Println("login and password are accepted")
 			AccessFlag = 1
-
-		} else {
+		} else if err != nil && !ok{
 			AccessFlag = 0
-			fmt.Println("wrong login/password")
+			return 0, fmt.Errorf("login/pass failed due to: %w", err)
 		}
 	}
-	return AccessFlag
+	return AccessFlag, nil
 }
-
-func SetLogin(loginIF LogPass){
-	loginIF.BuildLogin("","")
-}
-
 //**********************************************//
-
 
