@@ -6,8 +6,6 @@ import (
 	"userTA/player"
 	"userTA/requests"
 	"userTA/responses"
-
-	//"userTA/responses"
 )
 var loginStruct player.LoginStruct
 
